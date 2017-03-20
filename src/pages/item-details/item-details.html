@@ -1,16 +1,30 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Card Editor</ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content>
+
+
   <ion-list>
+
     <ion-item>
-      <ion-input #titleBox clearInput placeholder="Title" (blur)="saveTitle(titleBox.value)"></ion-input>
+      <ion-input [(ngModel)]="selectedItem.title" clearInput placeholder="Title"></ion-input>
     </ion-item>
+
     <ion-item>
-      <ion-textarea #noteBox clearInput placeholder="Content ..." (blur)="saveNote(noteBox.value)"></ion-textarea>
+      <ion-textarea [(ngModel)]="selectedItem.note" placeholder="Content ..."></ion-textarea>
     </ion-item>
+
   </ion-list>
+
+
+  <ion-fab left bottom>
+    <button ion-fab mini color="danger" (click)="delete()">
+      <ion-icon name="trash"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab right bottom>
+    <button ion-fab mini color="secondary" (click)="save()">
+      <ion-icon name="checkmark"></ion-icon>
+    </button>
+  </ion-fab>
+
+
 </ion-content>

@@ -1,21 +1,38 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Cards</ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content>
-  <ion-card ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-    <ion-card-header>
-      {{item.title}}
+
+
+  <p center text-center *ngIf="items.length === 0">
+    Your card list is empty
+  </p>
+
+
+  <ion-card ion-item *ngFor="let item of items">
+
+    <ion-card-header *ngIf="item.title">
+      {{ item.title }}
     </ion-card-header>
-    <ion-card-content>
-      {{item.note}}
+
+    <ion-card-content *ngIf="item.note">
+      <ion-item text-wrap>
+        {{ item.note }}
+      </ion-item>
     </ion-card-content>
-  </ion-card>
-  <ion-fab right bottom>
-      <button ion-fab (click)="addItem()">
-        <ion-icon name="add"></ion-icon>
+
+    <ion-item>
+      <p>{{ item.updated | date:'medium' }}</p>
+      <button ion-button clear icon-only item-right (click)="itemTapped($event, item)">
+        <ion-icon name="create"></ion-icon>
       </button>
+    </ion-item>
+
+  </ion-card>
+
+
+  <ion-fab right bottom>
+    <button ion-fab mini color="secondary" (click)="addItem()">
+      <ion-icon name="add"></ion-icon>
+    </button>
   </ion-fab>
+
+
 </ion-content>

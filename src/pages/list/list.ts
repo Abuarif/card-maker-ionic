@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Events } from 'ionic-angular';
 import { NavController, NavParams } from 'ionic-angular';
 import { ItemDetailsPage } from '../item-details/item-details';
 
@@ -8,12 +9,26 @@ import { ItemDetailsPage } from '../item-details/item-details';
   templateUrl: 'list.html'
 })
 export class ListPage {
-  selectedItem: any;
-  items: Array<{title: string, note: string}>;
+  maxId: number;
+  items: Array<{ id: number, title: string, note: string, updated: Date }>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.items = [];
-    this.addItem();
+  constructor(
+    public navCtrl: NavController,
+    public events: Events
+  ) {
+
+    this.maxId = 0;
+
+    this.items = [{
+      id: this.maxId++,
+      title: 'Example Card',
+      note: 'You can edit this card',
+      updated: new Date()
+    }];
+
+    this.events.subscribe('item:delete', id => {
+      this.items = this.items.filter(item => item.id !== id);
+    });
   }
 
   itemTapped(event, item) {
@@ -22,8 +37,10 @@ export class ListPage {
 
   addItem() {
     this.items.unshift({
-      title: 'Title',
-      note: 'Content ...'
+      id: this.maxId++,
+      title: '',
+      note: '',
+      updated: new Date()
     });
     this.navCtrl.push(ItemDetailsPage, {
       item: this.items[0]

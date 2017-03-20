@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Events } from 'ionic-angular';
 import { NavController, NavParams } from 'ionic-angular';
 
 
@@ -9,15 +10,25 @@ import { NavController, NavParams } from 'ionic-angular';
 export class ItemDetailsPage {
   selectedItem: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public events: Events
+  ) {
     this.selectedItem = navParams.get('item');
   }
 
-  saveTitle(value) {
-    this.selectedItem.title = value;
+  save() {
+    if (this.selectedItem.title || this.selectedItem.note) {
+      this.selectedItem.updated = new Date();
+    } else {
+      this.events.publish('item:delete', this.selectedItem.id);
+    }
+    this.navCtrl.pop();
   }
 
-  saveNote(value) {
-    this.selectedItem.note = value;
+  delete() {
+    this.events.publish('item:delete', this.selectedItem.id);
+    this.navCtrl.pop();
   }
 }
