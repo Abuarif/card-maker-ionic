@@ -1,17 +1,16 @@
 <ion-header>
   <ion-navbar>
-    <button menuToggle *ngIf="!selectedItem">
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Item Details</ion-title>
+    <ion-title>Card Editor</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <h3 text-center *ngIf="selectedItem">
-    {{selectedItem.title}}
-  </h3>
-  <h4 text-center *ngIf="selectedItem">
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </h4>
+  <ion-list>
+    <ion-item>
+      <ion-input #titleBox clearInput placeholder="Title" (blur)="saveTitle(titleBox.value)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-textarea #noteBox clearInput placeholder="Content ..." (blur)="saveNote(noteBox.value)"></ion-textarea>
+    </ion-item>
+  </ion-list>
 </ion-content>
